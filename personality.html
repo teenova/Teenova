@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teenova Personality Test</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(to right, #fc5c7d, #6a82fb);
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      margin-top: 60px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      max-width: 850px;
+    }
+
+    h1 {
+      color: #6a1b9a;
+    }
+
+    .btn-submit {
+      background-color: #6a1b9a;
+      color: white;
+      border-radius: 10px;
+    }
+
+    .btn-submit:hover {
+      background-color: #4a148c;
+    }
+
+    .result {
+      display: none;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #2e7d32;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">Teenova Personality Test</h1>
+    <p class="lead">Discover who you are in just 5 questions!</p>
+
+    <form id="personalityForm">
+      <div class="mb-4">
+        <label>1. What’s your ideal weekend?</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Adventurer">Hiking or exploring</option>
+          <option value="Planner">Organizing or journaling</option>
+          <option value="Creative">Drawing or music</option>
+          <option value="Thinker">Reading or coding</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>2. Your friends describe you as:</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Adventurer">Energetic</option>
+          <option value="Planner">Responsible</option>
+          <option value="Creative">Imaginative</option>
+          <option value="Thinker">Smart</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>3. You’d rather:</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Adventurer">Try something new</option>
+          <option value="Planner">Plan ahead</option>
+          <option value="Creative">Make art or music</option>
+          <option value="Thinker">Figure out puzzles</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>4. Your favorite school subject?</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Creative">Art or English</option>
+          <option value="Thinker">Science or Math</option>
+          <option value="Planner">History or Economics</option>
+          <option value="Adventurer">Sports or PE</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>5. How do you solve problems?</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Adventurer">Take action</option>
+          <option value="Planner">Break it down step-by-step</option>
+          <option value="Creative">Think outside the box</option>
+          <option value="Thinker">Analyze carefully</option>
+        </select>
+      </div>
+
+<button id="submitBtn">Submit Personality Test</button>
+
+</form>
+
+    <div class="result" id="resultBox">
+      You are a <span id="personalityType">Creative Spark</span>!
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("personalityForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const answers = Array.from(document.querySelectorAll("select")).map(sel => sel.value);
+  const count = { Adventurer: 0, Planner: 0, Creative: 0, Thinker: 0 };
+
+  answers.forEach(ans => {
+    if(count[ans] !== undefined) count[ans]++;
+  });
+
+  // Find the highest scoring personality type
+  const topPersonality = Object.entries(count).reduce((a, b) => (a[1] > b[1] ? a : b))[0];
+
+  // Show the result on the page
+  document.getElementById("personalityType").textContent = topPersonality;
+  document.getElementById("resultBox").style.display = "block";
+
+  // Save the calculated result (not hardcoded) to localStorage
+  localStorage.setItem('personalityResult', topPersonality);
+
+  // Redirect after a short delay so user sees the result briefly
+  setTimeout(() => {
+    window.location.href = 'Passion.html'; // next test page
+  }, 1500); // 1.5 seconds delay
+});
+  </script>
+</body>
+</html>

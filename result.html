@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Teenova Results</title>
+
+  <!-- Firebase SDKs (compat version for easier usage with script tags) -->
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f1f3f5;
+      color: #333;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1f2e4a;
+    }
+
+    .result-item {
+      margin: 20px 0;
+      font-size: 18px;
+    }
+
+    .tag {
+      font-weight: bold;
+      color: #1f2e4a;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your Teenova Results</h1>
+    <p class="result-item"><span class="tag">Personality:</span> <span id="personality"></span></p>
+    <p class="result-item"><span class="tag">Passion:</span> <span id="passion"></span></p>
+    <p class="result-item"><span class="tag">Communication:</span> <span id="communication"></span></p>
+    <p class="result-item"><span class="tag">Intelligence:</span> <span id="intelligence"></span></p>
+
+    <div class="footer">Your results have been saved to our system securely.</div>
+  </div>
+
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpnenlt7eR62MpkHDFSOp7m9JmtiMWaAM",
+      authDomain: "teenova-edu.firebaseapp.com",
+      projectId: "teenova-edu",
+      storageBucket: "teenova-edu.appspot.com",
+      messagingSenderId: "665727848108",
+      appId: "1:665727848108:web:62cbfb78920c54aa035909",
+      measurementId: "G-8GV2CX64ZX"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    window.onload = () => {
+      const personality = localStorage.getItem('personalityResult') || 'Not available';
+      const passion = localStorage.getItem('passionResult') || 'Not available';
+      const communication = localStorage.getItem('communicationResult') || 'Not available';
+      const intelligence = localStorage.getItem('intelligenceResult') || 'Not available';
+
+      // Display results in HTML
+      document.getElementById("personality").innerText = personality;
+      document.getElementById("passion").innerText = passion;
+      document.getElementById("communication").innerText = communication;
+      document.getElementById("intelligence").innerText = intelligence;
+
+      // Save results to Firestore
+      db.collection("results").add({
+        personality: personality,
+        passion: passion,
+        communication: communication,
+        intelligence: intelligence,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => console.log("Results saved successfully"))
+      .catch(error => console.error("Error saving results:", error));
+    };
+  </script>
+</body>
+</html>

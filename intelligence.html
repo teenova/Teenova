@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teenova Intelligence Test</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(to right, #fceabb, #f8b500);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      margin-top: 60px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      max-width: 850px;
+    }
+
+    h1 {
+      color: #e65100;
+    }
+
+    .btn-submit {
+      background-color: #e65100;
+      color: white;
+      border-radius: 10px;
+    }
+
+    .btn-submit:hover {
+      background-color: #bf360c;
+    }
+
+    .result {
+      display: none;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #bf360c;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">Teenova Intelligence Test</h1>
+    <p class="lead">Which kind of thinker are you?</p>
+
+    <form id="intelligenceForm">
+      <div class="mb-4">
+        <label>1. What comes next? 2, 4, 8, 16, __</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Number">32</option>
+          <option value="Logic">30</option>
+          <option value="Creative">25</option>
+          <option value="Practical">20</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>2. You see a broken chair. What do you do?</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Practical">Try fixing it</option>
+          <option value="Logic">Check the weak parts</option>
+          <option value="Creative">Paint or decorate it</option>
+          <option value="Number">Measure it</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>3. You’re best at:</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Creative">Drawing or storytelling</option>
+          <option value="Number">Math problems</option>
+          <option value="Logic">Puzzles and riddles</option>
+          <option value="Practical">Fixing or building things</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>4. A classmate forgets their project. You:</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Practical">Lend them supplies</option>
+          <option value="Logic">Suggest a quick plan</option>
+          <option value="Creative">Help with a creative excuse</option>
+          <option value="Number">Share the budget info</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>5. What do you enjoy the most?</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Logic">Brain teasers</option>
+          <option value="Creative">Design and imagination</option>
+          <option value="Number">Calculations</option>
+          <option value="Practical">Hands-on activities</option>
+        </select>
+      </div>
+
+<button id="submitBtn">Submit Intelligence Test</button>
+      
+    </form>
+
+    <div class="result" id="resultBox">
+      You're a <span id="intellType">Logical Thinker</span>!
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("intelligenceForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const values = Array.from(document.querySelectorAll("select")).map(sel => sel.value);
+      const count = { Logic: 0, Creative: 0, Number: 0, Practical: 0 };
+
+      values.forEach(val => count[val]++);
+      const topType = Object.entries(count).reduce((a, b) => (a[1] > b[1] ? a : b))[0];
+
+      document.getElementById("intellType").textContent = topType + "!";
+      document.getElementById("resultBox").style.display = "block";
+    });
+document.getElementById('submitBtn').addEventListener('click', function() {
+    const intelligenceResult = 90; // your test result value
+    localStorage.setItem('intelligenceResult', intelligenceResult);
+    
+    // After last test, go to result page
+    window.location.href = 'Result.html';
+});   
+  </script>
+</body>
+</html>

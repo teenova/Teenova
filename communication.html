@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teenova Communication Test</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      margin-top: 60px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      max-width: 850px;
+    }
+
+    h1 {
+      color: #00796b;
+    }
+
+    .btn-submit {
+      background-color: #00796b;
+      color: white;
+      border-radius: 10px;
+    }
+
+    .btn-submit:hover {
+      background-color: #004d40;
+    }
+
+    .result {
+      display: none;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #00695c;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">Teenova Communication Test</h1>
+    <p class="lead">Find out your communication superpower!</p>
+
+    <form id="communicationForm">
+      <div class="mb-4">
+        <label>1. If you’re in a group discussion, you usually:</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Confident">Lead the talk</option>
+          <option value="Listener">Listen more than talk</option>
+          <option value="Team">Share your ideas when asked</option>
+          <option value="Expressive">Add fun and creativity</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>2. When you're nervous, you:</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Listener">Stay silent</option>
+          <option value="Expressive">Use humor</option>
+          <option value="Team">Ask for help</option>
+          <option value="Confident">Speak anyway</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>3. Your ideal way of expressing feelings:</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Expressive">Art or writing</option>
+          <option value="Confident">Direct words</option>
+          <option value="Team">Sharing with a close friend</option>
+          <option value="Listener">I keep them inside</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>4. A teacher asks you to present something. You:</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Confident">Say yes instantly</option>
+          <option value="Team">Say yes with a friend</option>
+          <option value="Listener">Avoid it</option>
+          <option value="Expressive">Make it creative</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label>5. During an argument, you:</label>
+        <select class="form-select" required>
+          <option value="">Choose...</option>
+          <option value="Team">Try to make peace</option>
+          <option value="Confident">Stand your ground</option>
+          <option value="Listener">Walk away quietly</option>
+          <option value="Expressive">Use humor or jokes</option>
+        </select>
+      </div>
+
+    <button id="submitBtn">Submit Communication Test</button> 
+    </form>
+
+    <div class="result" id="resultBox">
+      You are a <span id="commType">Team Talker</span>!
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("communicationForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const values = Array.from(document.querySelectorAll("select")).map(sel => sel.value);
+      const count = { Confident: 0, Listener: 0, Team: 0, Expressive: 0 };
+
+      values.forEach(val => count[val]++);
+      const topStyle = Object.entries(count).reduce((a, b) => (a[1] > b[1] ? a : b))[0];
+
+      document.getElementById("commType").textContent = topStyle + "!";
+      document.getElementById("resultBox").style.display = "block";
+    });
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    const communicationResult = 70; // your test result value
+    localStorage.setItem('communicationResult', communicationResult);
+    window.location.href = 'Intelligence.html';
+}); 
+  </script>
+</body>
+</html>
