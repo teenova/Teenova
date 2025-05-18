@@ -1,55 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Register - Teenova</title>
+  <meta charset="UTF-8">
+  <title>Teenova | Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: sans-serif;
-      background: #f0f0f0;
+      background: #1a1a2e;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
-      height: 100vh;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      margin: 0;
     }
+
     .register-box {
-      background: white;
+      background: #16213e;
       padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 300px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
-    input, button {
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
-    }
-    button {
-      background: #1f2e4a;
-      color: white;
+      padding: 12px;
+      margin: 10px 0;
       border: none;
+      border-radius: 5px;
+      background: #0f3460;
+      color: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #e94560;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
       cursor: pointer;
     }
-    #error {
-      color: red;
+
+    button:hover {
+      background: #ff2e63;
+    }
+
+    .message {
+      text-align: center;
       margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <div class="register-box">
-    <h2>Register</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
+    <h2>Create Account</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
     <button onclick="register()">Register</button>
-    <p>Already have an account? <a href="login.html">Login</a></p>
-    <div id="error"></div>
+    <div class="message" id="msg"></div>
   </div>
 
   <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
   <script>
     const firebaseConfig = {
@@ -58,32 +81,26 @@
       projectId: "teenova-edu",
       storageBucket: "teenova-edu.appspot.com",
       messagingSenderId: "665727848108",
-      appId: "1:665727848108:web:62cbfb78920c54aa035909",
-      measurementId: "G-8GV2CX64ZX"
+      appId: "1:665727848108:web:62cbfb78920c54aa035909"
     };
-
     firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
 
     function register() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const errorDiv = document.getElementById("error");
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const msg = document.getElementById("msg");
 
-      errorDiv.innerText = "";
-
-      if (!email || !password) {
-        errorDiv.innerText = "Please enter email and password.";
-        return;
-      }
-
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Registered successfully
-          window.location.href = "home.html";  // or login.html
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          msg.innerText = "Registered successfully!";
+          msg.style.color = "lightgreen";
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 2000);
         })
         .catch((error) => {
-          errorDiv.innerText = error.message;
+          msg.innerText = error.message;
+          msg.style.color = "salmon";
         });
     }
   </script>
